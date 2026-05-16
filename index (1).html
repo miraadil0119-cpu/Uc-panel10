@@ -1,0 +1,121 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>BGMI UC STORE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{
+      margin:0;
+      font-family:Arial;
+      background:#0b0b0b;
+      color:#00ffcc;
+      text-align:center;
+    }
+
+    h1{padding:15px;}
+
+    .box{
+      margin:10px;
+      padding:15px;
+      border:1px solid #00ffcc;
+      border-radius:10px;
+      background:#111;
+    }
+
+    input{
+      width:90%;
+      padding:10px;
+      margin:8px;
+      border:none;
+      border-radius:5px;
+    }
+
+    .pack{
+      border:1px solid #00ffcc;
+      margin:5px;
+      padding:10px;
+      cursor:pointer;
+    }
+
+    .selected{
+      background:#00ffcc;
+      color:black;
+    }
+
+    button{
+      padding:10px 20px;
+      background:#00ffcc;
+      border:none;
+      margin-top:10px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>BGMI UC STORE</h1>
+
+<div class="box">
+  <p>UPI ID: <b>8899544521@ibl</b></p>
+  <p>Name: <b>UC APP</b></p>
+</div>
+
+<div class="box">
+
+  <input id="uid" placeholder="Enter BGMI UID">
+  <input id="ref" placeholder="Referral Code (optional)">
+
+  <div class="pack" onclick="selectPack(this,65)">60 UC - ₹65</div>
+  <div class="pack" onclick="selectPack(this,360)">325 UC - ₹360</div>
+  <div class="pack" onclick="selectPack(this,720)">660 UC - ₹720</div>
+  <div class="pack" onclick="selectPack(this,1830)">1800 UC - ₹1830</div>
+
+  <input type="file" id="ss">
+
+  <button onclick="payNow()">Pay Now (PhonePe / GPay)</button>
+
+</div>
+
+<script>
+let selectedPrice = 0;
+
+function selectPack(el, price){
+  document.querySelectorAll('.pack').forEach(p=>{
+    p.classList.remove('selected');
+  });
+
+  el.classList.add('selected');
+  selectedPrice = price;
+}
+
+function payNow(){
+  let uid = document.getElementById("uid").value;
+  let ref = document.getElementById("ref").value;
+
+  if(!uid){
+    alert("Enter UID");
+    return;
+  }
+
+  if(!selectedPrice){
+    alert("Select UC Package");
+    return;
+  }
+
+  if(ref){
+    alert("Referral Used: " + ref);
+  }
+
+  let upiLink =
+    "upi://pay?pa=8899544521@ibl" +
+    "&pn=UC%20APP" +
+    "&am=" + selectedPrice +
+    "&cu=INR";
+
+  window.location.href = upiLink;
+}
+</script>
+
+</body>
+</html>
